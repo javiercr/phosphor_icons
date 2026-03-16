@@ -45,7 +45,7 @@ defmodule PhosphorIcons.MixProject do
       # This option is only needed when you don't want to use the OTP application name
       name: "phosphor_icons",
       # These are the default files included in the package
-      files: ~w(core/raw),
+      files: ~w(lib core/raw README.md LICENSE mix.exs),
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/altdsoy/phosphor_icons"}
     ]

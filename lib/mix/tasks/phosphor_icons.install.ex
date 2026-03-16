@@ -23,6 +23,14 @@ defmodule Mix.Tasks.PhosphorIcons.Install do
     // let baseDir = path.join(__dirname, "../../../../deps/phosphor_icons/core/raw")
     let values = {}
     
+    if (!fs.existsSync(baseDir)) {
+      throw new Error(
+        "Phosphor Icons: The directory " + baseDir + " does not exist.\\n" +
+        "If you installed this package from Git, make sure you included the `submodules: true` option in your mix.exs:\\n" +
+        "{:phosphor_icons, git: \\"...\\", submodules: true}"
+      );
+    }
+
     let icons = fs
       .readdirSync(baseDir, { withFileTypes: true })
       .filter((dirent) => dirent.isDirectory())

@@ -11,8 +11,8 @@ The package can be installed by adding `phosphor_icons` to your list of dependen
 ```elixir
 def deps do
   [
-    # ...,
-    {:phosphor_icons, github: "javiercr/phosphor_icons", only: :dev}
+    # If installing via Git, you MUST include `submodules: true`
+    {:phosphor_icons, github: "javiercr/phosphor_icons", submodules: true, compile: false, app: false}
   ]
 end
 ```
