@@ -10,9 +10,9 @@ The package can be installed by adding `phosphor_icons` to your list of dependen
 
 ```elixir
 def deps do
-  [ 
+  [
     # ...,
-    {:phosphor_icons, "~> 0.0.1", compile: false, app: false}
+    {:phosphor_icons, github: "javiercr/phosphor_icons", only: :dev}
   ]
 end
 ```
@@ -36,7 +36,7 @@ where:
 - `NAME` is the icon name shown in the [Phosphor Icons website](https://phosphoricons.com/#toolbar).
 - `VARIANT` is one of the available variants: `thin`, `light`, `bold`, `fill`, `duotone`
 
-Here is some examples:
+Here are some examples:
 
 ```html
 <.icon name="pi-drop-thin" />
@@ -54,60 +54,17 @@ Here is some examples:
 <.icon name="pi-drop-half-bottom-duotone" />
 ```
 
-### Tailwind CSS Config
+### Tailwind v4 CSS Config (Phoenix >= 1.8.0)
 
-You have to update the Tailwind CSS config with the following (or something similar):
+You can automatically set up the Tailwind CSS v4 plugin for your Phoenix project by running the following mix task:
 
-```js
-// assets/tailwind.config.js
-module.exports = {
-  // ...
-  plugins: [
-    // ..
-    plugin(function ({ matchComponents, theme }) {
-      let baseDir = path.join(__dirname, "../deps/phosphor_icons/core/raw");
-      // for an umbrella app use the following instead
-      // let baseDir = path.join(__dirname, "../../../deps/phosphor_icons/core/raw");
-      let values = {};
-      let icons = fs
-        .readdirSync(baseDir, { withFileTypes: true })
-        .filter((dirent) => dirent.isDirectory())
-        .map((dirent) => dirent.name);
-
-      icons.forEach((dir) => {
-        fs.readdirSync(path.join(baseDir, dir)).map((file) => {
-          let name = path.basename(file, ".svg");
-
-          values[name] = { name, fullPath: path.join(baseDir, dir, file) };
-        });
-      });
-
-      matchComponents(
-        {
-          pi: ({ name, fullPath }) => {
-            let content = fs
-              .readFileSync(fullPath)
-              .toString()
-              .replace(/\r?\n|\r/g, "");
-
-            return {
-              [`--pi-${name}`]: `url('data:image/svg+xml;utf8,${content}')`,
-              "-webkit-mask": `var(--pi-${name})`,
-              mask: `var(--pi-${name})`,
-              "background-color": "currentColor",
-              "vertical-align": "middle",
-              display: "inline-block",
-              width: theme("spacing.10"),
-              height: theme("spacing.10"),
-            };
-          },
-        },
-        { values }
-      );
-    })
-  ]
-}
+```bash
+mix phosphor_icons.install
 ```
+
+This task will:
+1. Create a `phosphor_icons.js` plugin file in your `assets/vendor` directory.
+2. Automatically add the `@plugin "../vendor/phosphor_icons";` directive to your `assets/css/app.css` file.
 
 ## Usage of SVG images
 

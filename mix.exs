@@ -4,7 +4,7 @@ defmodule PhosphorIcons.MixProject do
   def project do
     [
       app: :phosphor_icons,
-      version: "2.1.0",
+      version: "2.1.1",
       elixir: "~> 1.0",
       start_permanent: false,
       package: package(),
